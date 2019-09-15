@@ -68,6 +68,7 @@ energy_savings <- energy_savings %>%
 
 
 ```{r fig.height = 10, fig.width = 12}
+# Up to 82 F
 cooling_plot <- ggplot(energy_savings, aes(x = cooling_setpoint_f, y = savings)) + 
   geom_point((aes(col = `climate_zone`)), size = 4, show.legend = T) + 
   geom_line((aes(col = `climate_zone`)), size =1.5, show.legend = T) + 
@@ -75,20 +76,49 @@ cooling_plot <- ggplot(energy_savings, aes(x = cooling_setpoint_f, y = savings))
   ylab("% energy savings\n") + 
   xlab("\nCooling setpoint") + 
   theme(
-        axis.text.x = element_text(size = 28, vjust=-0.5),
-        axis.text.y = element_text(size = 28, hjust = -0.5),  
-        axis.title.x = element_text(size = 28),
-        axis.title.y = element_text(size = 28),
+        axis.text.x = element_text(size = 30, vjust=-0.5),
+        axis.text.y = element_text(size = 30, hjust = -0.5),  
+        axis.title.x = element_text(size = 30),
+        axis.title.y = element_text(size = 30),
         legend.position="left",
         axis.line = element_line(colour = 'black', size = 1.5),
         axis.ticks = element_line(colour = 'black', size = 1.5),
         axis.ticks.length = unit(6, "pt")
         
       ) +
-  scale_x_continuous( limits = c(74, 86),  breaks = c(74, 76, 78, 80, 82, 84, 86),  sec.axis = sec_axis(~(.-32)*(5/9), name = ""))
+  scale_x_continuous( limits = c(74, 83),  breaks = c(74, 76, 78, 80, 82),  sec.axis = sec_axis(~(.-32)*(5/9), name = "")) +
+  ylim(0, 50) +
+  ggsave(filename = "cooling_curve_up_to_82.png")
   
 
 cooling_plot
 
+```
+
+```{r}
+# Up to 86 F
+cooling_plot_86 <- ggplot(energy_savings, aes(x = cooling_setpoint_f, y = savings)) + 
+  geom_point((aes(col = `climate_zone`)), size = 4, show.legend = T) + 
+  geom_line((aes(col = `climate_zone`)), size =1.5, show.legend = T) + 
+  theme_classic() +
+  ylab("% energy savings\n") + 
+  xlab("\nCooling setpoint") + 
+  theme(
+        axis.text.x = element_text(size = 30, vjust=-0.5),
+        axis.text.y = element_text(size = 30, hjust = -0.5),  
+        axis.title.x = element_text(size = 30),
+        axis.title.y = element_text(size = 30),
+        legend.position="left",
+        axis.line = element_line(colour = 'black', size = 1.5),
+        axis.ticks = element_line(colour = 'black', size = 1.5),
+        axis.ticks.length = unit(6, "pt")
+        
+      ) +
+  scale_x_continuous( limits = c(74, 87),  breaks = c(74, 76, 78, 80, 82, 84, 86),  sec.axis = sec_axis(~(.-32)*(5/9), name = "")) +
+  ylim(0, 60) +
+  ggsave(filename = "cooling_curve_up_to_86.png")
+  
+
+cooling_plot_86
 ```
 
